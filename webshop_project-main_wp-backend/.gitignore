@@ -6,4 +6,3 @@ wp-data/
 wp-admin/
 wp-includes/
 *.log
-*.sql
