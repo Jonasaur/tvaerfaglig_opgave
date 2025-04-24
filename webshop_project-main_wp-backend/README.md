@@ -41,6 +41,15 @@ docker-compose up -d
 
 3. **Import the latest SQL file**
 
+### 🪟 Windows Users – Importing the WordPress DB
+
+If you're on Windows, use this **single-line command** to import the database:
+
+```bash
+docker run --rm --volumes-from webshop_project-main_wp-backend-wordpress-1 --network container:webshop_project-main_wp-backend-wordpress-1 -e WORDPRESS_DB_HOST=db -e WORDPRESS_DB_USER=wpuser -e WORDPRESS_DB_PASSWORD=wppassword -e WORDPRESS_DB_NAME=wpdatabase wordpress:cli wp db import /var/www/html/wp-content/db-dumps/initial.sql
+
+# other systems use:
+
 docker run --rm \
   --volumes-from webshop_project-main_wp-backend-wordpress-1 \
   --network container:webshop_project-main_wp-backend-wordpress-1 \
@@ -49,6 +58,8 @@ docker run --rm \
   -e WORDPRESS_DB_PASSWORD=wppassword \
   -e WORDPRESS_DB_NAME=wpdatabase \
   wordpress:cli wp db import /var/www/html/wp-content/db-dumps/initial.sql
+
+```
 
 <!-- SUCCESS!! -->
 <!-- Database is updated -->
