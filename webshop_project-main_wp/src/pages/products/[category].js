@@ -1,6 +1,6 @@
 import ProductList from '@/components/ProductList'; // Ensure this is a default import
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+
+
 
 export async function getServerSideProps({ params }) {
   const { category } = params;

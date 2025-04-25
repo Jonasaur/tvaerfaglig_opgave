@@ -1,7 +1,6 @@
 import React from 'react'; // Ensure React is imported
 import ProductList from '@/components/ProductList'; // Ensure this is a default import
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+
 
 export async function getServerSideProps() {
   const productsRef = collection(db, 'products');
