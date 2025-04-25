@@ -21,13 +21,13 @@ docker run --rm --volumes-from webshop_project-main_wp-backend-wordpress-1 --net
 
 # other systems use this:
 
-docker run --rm 
-  --volumes-from webshop_project-main_wp-backend-wordpress-1 
-  --network container:webshop_project-main_wp-backend-wordpress-1 
-  -e WORDPRESS_DB_HOST=db 
-  -e WORDPRESS_DB_USER=wpuser 
-  -e WORDPRESS_DB_PASSWORD=wppassword 
-  -e WORDPRESS_DB_NAME=wpdatabase 
+docker run --rm /
+  --volumes-from webshop_project-main_wp-backend-wordpress-1 /
+  --network container:webshop_project-main_wp-backend-wordpress-1 /
+  -e WORDPRESS_DB_HOST=db /
+  -e WORDPRESS_DB_USER=wpuser /
+  -e WORDPRESS_DB_PASSWORD=wppassword /
+  -e WORDPRESS_DB_NAME=wpdatabase /
   wordpress:cli wp db export /var/www/html/wp-content/db-dumps/initial.sql
 ```  
 
