@@ -1,9 +1,12 @@
 import React from "react";
+import HeroSection from "../components/HeroSection";
+import TrendingProducts from "../components/TrendingProducts";
 
 export default function Home() {
   return (
     <div>
-      <h1>Hello, this is the Home page!</h1>
+      <HeroSection />
+      <TrendingProducts />
     </div>
   );
 }
