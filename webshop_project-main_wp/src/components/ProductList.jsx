@@ -7,6 +7,8 @@ import { addToCart } from "../app/slices/cartSlice";
 export default function ProductList({ products, title }) {
   const [sortBy, setSortBy] = useState("bestsellers");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [outOfStockOnly, setOutOfStockOnly] = useState(false);
   const dispatch = useDispatch();
 
   const handleAddToCart = (product) => {
@@ -25,6 +27,25 @@ export default function ProductList({ products, title }) {
     alert(`${product.name} tilføjet til kurven!`);
   };
 
+  let filteredProducts = [...products];
+
+  // Filter
+  if (inStockOnly) {
+    filteredProducts = filteredProducts.filter(p => p.stock_status === "instock");
+  }
+  if (outOfStockOnly) {
+    filteredProducts = filteredProducts.filter(p => p.stock_status === "outofstock");
+  }
+
+  // Sort
+  if (sortBy === "price-low") {
+    filteredProducts.sort((a, b) => Number(a.price) - Number(b.price));
+  } else if (sortBy === "price-high") {
+    filteredProducts.sort((a, b) => Number(b.price) - Number(a.price));
+  } else if (sortBy === "newest") {
+    filteredProducts.sort((a, b) => new Date(b.date_created) - new Date(a.date_created));
+  }
+
   return (
     <Container className="my-5">
       <h1 className="mb-5" style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
@@ -42,14 +63,28 @@ export default function ProductList({ products, title }) {
           </button>
 
           {filterOpen && (
-            <div className="filter-dropdown">
+            <div className="filter-dropdown mt-2 p-2 border rounded bg-light">
               <div className="filter-option">
-                <input type="checkbox" id="in-stock" />
-                <label htmlFor="in-stock">På lager</label>
+                <input
+                  type="checkbox"
+                  id="in-stock"
+                  checked={inStockOnly}
+                  onChange={() => setInStockOnly(!inStockOnly)}
+                />
+                <label htmlFor="in-stock" className="ms-2">
+                  På lager
+                </label>
               </div>
-              <div className="filter-option">
-                <input type="checkbox" id="out-of-stock" />
-                <label htmlFor="out-of-stock">Ikke på lager</label>
+              <div className="filter-option mt-2">
+                <input
+                  type="checkbox"
+                  id="out-of-stock"
+                  checked={outOfStockOnly}
+                  onChange={() => setOutOfStockOnly(!outOfStockOnly)}
+                />
+                <label htmlFor="out-of-stock" className="ms-2">
+                  Ikke på lager
+                </label>
               </div>
             </div>
           )}
@@ -60,7 +95,7 @@ export default function ProductList({ products, title }) {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="sort-select"
+            className="sort-select ms-2"
           >
             <option value="bestsellers">Mest populære</option>
             <option value="price-low">Pris (Lav til Høj)</option>
@@ -70,10 +105,12 @@ export default function ProductList({ products, title }) {
         </div>
       </div>
 
-      <div className="products-count mb-3">{products.length} produkter</div>
+      <div className="products-count mb-3">
+        {filteredProducts.length} produkter
+      </div>
 
       <Row>
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Col
             md={4}
             sm={6}
